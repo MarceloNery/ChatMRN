@@ -1,0 +1,14 @@
+{
+  "name": "ChatMRN",
+  "version": "0.0.1",
+  "author": "MarceloNery",
+  "description": "A chat to study",
+  "engines":{
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*"
+  }
+}
