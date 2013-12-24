@@ -1,8 +1,9 @@
 var app = require('express')()
   , server = require('http').createServer(app)
-  , io = require('socket.io').listen(server);
+  , io = require('socket.io').listen(server)
+  , port = process.env.PORT || 3000;
  
-server.listen(3000, function(){
+server.listen(port, function(){
   console.log("Chat real-time...");
 });
  
