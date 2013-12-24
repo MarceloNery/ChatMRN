@@ -8,7 +8,7 @@ server.listen(port, function(){
 });
  
 app.get('/', function (req, res) {
-  res.sendfile('https://dl.dropboxusercontent.com/u/76971854/scripts%20and%20web/socket%20teste/index.html');
+  res.sendfile('./public/index.html');
 });
 
 // Eventos do Socket.IO
