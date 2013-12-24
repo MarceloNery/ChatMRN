@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>MRNChat</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <meta charset="utf-8">
-    <link rel='icon' href="/img/pen_red.ico">
-    <script>
-        //conecta no ip certo - a depender - nesse caso ele pega o local.
-      var socket = io.connect(window.location.hostname);
-      
-      //recebe as mensagens e escreve.
-      socket.on('toClient', function (msg) {
-        document.getElementById('historico').innerHTML += msg;
-      });
-      
-      //envia as mensagens para o servidor, que devolve para todo mundo.
-      var enviar = function(){
-        var nome = document.getElementById('nome').value; 
-        var msg = document.getElementById('mensagem').value;
-        
-        //isso é o que realmente envia a mensagem
-        //a função toServer foi criada aqui também e envia a 'data'
-        socket.emit('toServer', {nome: nome, msg: msg}); 
-      };
-    </script>
-  </head>
-  <body>
-    <h1>MRNChat</h1>
-    <label>Nome: 
-      <input type="text" id="nome">
-    </label>
-    <label>Mensagem: 
-      <input type="text" id="mensagem">
-    </label>
-    <button id="enviar" onclick="enviar();">Enviar</button>
-    <hr>
-    <div id="historico"></div>
-  </body>
+    <head>
+        <link rel='icon' href="/img/pen_red.ico">
+        <title>MRNChat</title>
+        <link rel="stylesheet" href="styles/reset.css">
+        <script src="/socket.io/socket.io.js"></script>
+        <meta charset="utf-8">    
+        <meta name="viewport" content="width=device-width" />
+        <style>
+            body {
+                height: auto;
+            }
+            #mensagem {
+                width: 100%;
+                height: 50px;
+            }
+            footer {
+                position: relative;
+                bottom: 0;
+                width: 100%;
+                padding-top: 10%;
+                height: 70px;
+            }
+            section {
+                height: 100px;
+                width: 100%
+            }
+            #historico {
+                height: 100px;
+                overflow: auto;
+            }
+        </style>
+        <script>
+            //conecta no ip certo - a depender - nesse caso ele pega o local.
+            var socket = io.connect(window.location.hostname);
+
+            //recebe as mensagens e escreve.
+            socket.on('toClient', function (msg) {
+            document.getElementById('historico').innerHTML = msg + document.getElementById('historico').innerHTML;
+            });
+
+            //envia as mensagens para o servidor, que devolve para todo mundo.
+            var enviar = function(){
+            var nome = document.getElementById('nome').value; 
+            var msg = document.getElementById('mensagem').value;
+
+            //isso é o que realmente envia a mensagem
+            //a função toServer foi criada aqui também e envia a 'data'
+            socket.emit('toServer', {nome: nome, msg: msg}); 
+            document.getElementById('mensagem').value = "";
+            };
+
+        </script>
+    </head>
+    <body>
+        <header>
+        </header>
+
+        <section>
+            <fieldset>
+                <div id="historico"></div>
+            </fieldset>
+        </section>
+
+        <footer>
+            <h4>MRNChat</h4>
+            <label>Nome: 
+                <input type="text" id="nome">
+            </label>
+            <BR>
+            <label>Mensagem: 
+                <input type="text" id="mensagem" onkeydown="if (event.keyCode == 13)
+                        enviar();">
+            </label>
+        </footer>
+    </body>
 </html>

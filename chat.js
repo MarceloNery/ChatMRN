@@ -18,7 +18,7 @@ app.get('/', function (req, res) {
 io.sockets.on('connection', function (socket) {
  
   socket.on('toServer', function (data) {
-    var msg = data.nome+ ":"+data.msg+"<BR>";
+    var msg = data.nome+ ": "+data.msg+"<BR>";
     socket.emit('toClient', msg);
     socket.broadcast.emit('toClient', msg);
   });
