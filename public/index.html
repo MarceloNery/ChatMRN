@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chat Real-time</title>
+    <title>MRNChat</title>
     <script src="/socket.io/socket.io.js"></script>
     <meta charset="utf-8">
+    <link rel='icon' href="/img/pen_red.ico">
     <script>
+        //conecta no ip certo - a depender - nesse caso ele pega o local.
       var socket = io.connect(window.location.hostname);
+      
+      //recebe as mensagens e escreve.
       socket.on('toClient', function (msg) {
         document.getElementById('historico').innerHTML += msg;
       });
+      
+      //envia as mensagens para o servidor, que devolve para todo mundo.
       var enviar = function(){
         var nome = document.getElementById('nome').value; 
-        var msg = " " + document.getElementById('mensagem').value + "<BR>";
+        var msg = document.getElementById('mensagem').value;
+        
+        //isso é o que realmente envia a mensagem
+        //a função toServer foi criada aqui também e envia a 'data'
         socket.emit('toServer', {nome: nome, msg: msg}); 
       };
     </script>
   </head>
   <body>
-    <h1>Chat Real-time</h1>
+    <h1>MRNChat</h1>
     <label>Nome: 
-      <input type="text" id="nome" size="3">
+      <input type="text" id="nome">
     </label>
     <label>Mensagem: 
-      <input type="text" id="mensagem" size="10">
+      <input type="text" id="mensagem">
     </label>
     <button id="enviar" onclick="enviar();">Enviar</button>
     <hr>
